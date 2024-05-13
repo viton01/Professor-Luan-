@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Combustível</title>
+</head>
+<style>
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #141414;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #00ffea;
+    text-transform: uppercase;
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+form {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 255, 234, 0.5);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #00ffea;
+    font-size: 16px;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #00ffea;
+    color: #141414;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #00e0c9;
+}
+
+#resultado {
+    margin-top: 20px;
+}
+
+.resultado-item {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+</style>
+<body>
+    <h1>Calculadora de Consumo de Combustível</h1>
+    <form id="formCombustivel">
+        <label for="kilometros">Quantidade de quilômetros percorridos:</label>
+        <input type="number" id="kilometros" step="any" required><br>
+        
+        <label for="litros">Quantidade de litros de combustível gastos:</label>
+        <input type="number" id="litros" step="any" required><br>
+        
+        <label for="precoAlcool">Preço do litro do álcool:</label>
+        <input type="number" id="precoAlcool" step="any" required><br>
+        
+        <label for="precoGasolina">Preço do litro da gasolina:</label>
+        <input type="number" id="precoGasolina" step="any" required><br>
+        
+        <button type="submit">Calcular</button>
+    </form>
+    
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('formCombustivel').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const kilometrosPercorridos = parseFloat(document.getElementById('kilometros').value);
+            const litrosCombustivel = parseFloat(document.getElementById('litros').value);
+            const precoAlcool = parseFloat(document.getElementById('precoAlcool').value);
+            const precoGasolina = parseFloat(document.getElementById('precoGasolina').value);
+            
+            const consumoMedio = (kilometrosPercorridos / litrosCombustivel).toFixed(2);
+            const relacaoPrecos = (precoAlcool / precoGasolina).toFixed(2);
+            let combustivelVantajoso;
+            
+            if (relacaoPrecos <= 0.7) {
+                combustivelVantajoso = "Álcool é mais vantajoso";
+            } else {
+                combustivelVantajoso = "Gasolina é mais vantajosa";
+            }
+            
+            const resultadoHTML = `
+                <p>Consumo médio de combustível: ${consumoMedio} km/l</p>
+                <p>Relação entre o preço do álcool e da gasolina: ${relacaoPrecos}</p>
+                <p>${combustivelVantajoso}</p>
+            `;
+            
+            document.getElementById('resultado').innerHTML = resultadoHTML;
+        });
+    </script>
+</body>
+</html>
